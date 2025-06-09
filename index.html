@@ -87,7 +87,7 @@
             padding: 15px 25px;
             color: white;
             text-align: center;
-            width: 120px;
+            width: 150px;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
@@ -316,14 +316,14 @@
 <body>
     <div class="container fade-in">
         <div class="header">
-            <h1 class="title">🔍 Analizzatore Quorum</h1>
+            <h1 class="title">📊 Analizzatore Quorum</h1>
             <p class="subtitle">Monitora le distanze dalle previsioni di voto</p>
         </div>
 
         <div class="quorum-control pulse">
             <div class="quorum-label">🎯 Soglia Quorum Attuale</div>
             <div class="quorum-input-container">
-                <input type="number" class="quorum-input" id="quorum-input" value="29" min="0" max="100" step="0.1">
+                <input type="number" class="quorum-input" id="quorum-input" value="29.0" min="0" max="100" step="0.1" placeholder="29.0">
                 <span class="percent-symbol">%</span>
             </div>
         </div>
@@ -353,6 +353,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -364,7 +366,7 @@
             { name: 'MB', value: 40, color: '#4facfe', icon: 'M' }
         ];
 
-        let currentQuorum = 29;
+        let currentQuorum = 29.0;
 
         // Funzione per calcolare la distanza
         function calculateDistance(prediction, quorum) {
@@ -441,9 +443,17 @@
 
         // Event listener per l'input del quorum
         document.getElementById('quorum-input').addEventListener('input', function(e) {
-            const value = parseFloat(e.target.value);
-            if (!isNaN(value) && value >= 0 && value <= 100) {
-                currentQuorum = value;
+            let value = e.target.value;
+            
+            // Permetti input vuoto temporaneo durante la digitazione
+            if (value === '') {
+                return;
+            }
+            
+            // Converti a float e valida
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && numValue >= 0 && numValue <= 100) {
+                currentQuorum = numValue;
                 updateDisplay();
             }
         });
@@ -464,9 +474,17 @@
 
         // Effetto di aggiornamento in tempo reale mentre si digita
         document.getElementById('quorum-input').addEventListener('keyup', function(e) {
-            const value = parseFloat(e.target.value);
-            if (!isNaN(value) && value >= 0 && value <= 100) {
-                currentQuorum = value;
+            let value = e.target.value;
+            
+            // Permetti input vuoto temporaneo durante la digitazione
+            if (value === '') {
+                return;
+            }
+            
+            // Converti a float e valida
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && numValue >= 0 && numValue <= 100) {
+                currentQuorum = numValue;
                 updateDisplay();
             }
         });
